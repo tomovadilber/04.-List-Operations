@@ -1,0 +1,88 @@
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace firstProblemMidleExam
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            List<int> num = Console.ReadLine().Split(' ').Select(int.Parse).ToList();
+
+            int index;
+
+            while (true)
+            {
+                string[] ops = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries).ToArray();
+
+                if (ops[0] == "End")
+                {
+                    break;
+                }
+                else if (ops[0] == "Add")
+                {
+                    num.Add(int.Parse(ops[1]));
+                }
+                else if (ops[0] == "Insert")
+                {
+                    index = int.Parse(ops[2]);
+
+                    if (index < 0 || index >= num.Count)
+                    {
+                        Console.WriteLine("Invalid index");
+                    }
+                    else
+                    {
+                        num.Insert(int.Parse(ops[2]), int.Parse(ops[1]));
+                    }
+
+
+                }
+                else if (ops[0] == "Remove")
+                {
+                    index = int.Parse(ops[1]);
+                    if (index < 0 || index >= num.Count)
+                    {
+                        Console.WriteLine("Invalid index");
+                    }
+                    else
+                    {
+                        num.RemoveAt(int.Parse(ops[1]));
+                    }
+
+                }
+                else if (ops[0] == "Shift")
+                {
+                    if (ops[1] == "left") // 1 2 3 4 5 6 7 => 2 3 4 5 6 7 1
+                    {
+                        int count = int.Parse(ops[2]);
+
+                        for (int i = 0; i < count; i++)
+                        {
+                            num.Add(num[0]);
+                            num.RemoveAt(0);
+                        }
+                    }
+                    else if (ops[1] == "right") // 1 2 3 4 5 6 7 => 7 1 2 3 4 5 6
+                    {
+                        int count = int.Parse(ops[2]);
+
+                        for (int i = 0; i < count; i++)
+                        {
+                            num.Insert(0, num[num.Count - 1]);
+                            num.RemoveAt(num.Count - 1);
+                        }
+                    }
+                }
+
+
+            }
+
+            Console.WriteLine(String.Join(" ", num));
+        }
+
+    }
+}
